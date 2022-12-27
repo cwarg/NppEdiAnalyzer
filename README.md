@@ -1,6 +1,5 @@
 # Npp Edi Analyzer
-Notepad++ https://notepad-plus-plus.org/ is a very nice and fast text editor for programming that I like to use for many tasks.
-I decided to write a plugins for the analysis of EDIFACT and X12 EDI files formats
+This project is originally built by innox80 (https://github.com/innox80/NppEdiAnalyzer) and I am just adding to it, as it looks like they have since abandoned the project.
 
 NppEdiAnalyzer is a Plugin for Notepad++ to analyze EDI standard formats (Edifact/X12)
 
@@ -18,7 +17,7 @@ If you decide to try or use any of the software provided below please be advise 
 Used Libraries
 --------------
 
-### NppPlugin.NET v0.6-0.7 by UFO-Pu55y and later by kbilsted
+### NppPlugin.NET v0.6-0.7 by kbilsted
 
 Base for making Notepad++ plugins in C# 
 Licensed under GPL v3
@@ -39,4 +38,5 @@ Future Improvements
 Thanks to
 ---------
  + Don Ho , for the fantastic Notepad++ (https://notepad-plus-plus.org/)
- + UFO-Pu55y and kbilsted for the NppPlugin.NET package (https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net)
+ + kbilsted for the NppPlugin.NET package (https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net)
+ + innox80 for the original project (https://github.com/innox80/NppEdiAnalyzer)
