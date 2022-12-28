@@ -202,8 +202,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Properties\unformatX12.png" />
     <Resource Include="Properties\unformat.png" />
     <Resource Include="Properties\format.png" />
+    <Resource Include="Properties\formatX12.png" />
     <Content Include="Properties\star.png" />
     <Content Include="Properties\star_bmp.bmp" />
   </ItemGroup>

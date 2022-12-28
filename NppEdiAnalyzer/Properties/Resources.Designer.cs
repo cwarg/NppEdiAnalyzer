@@ -92,5 +92,23 @@ namespace Kbg.Demo.Namespace.Properties {
 			}
 		}
 
-	}
+        internal static System.Drawing.Bitmap formatX12
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("formatX12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap unformatX12
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("unformatX12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+    }
 }

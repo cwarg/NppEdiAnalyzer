@@ -100,6 +100,17 @@ namespace Kbg.Demo.Namespace
             Util.ReplaceAll("'\n", "'", editor);
         }
 
+        private void btnformatX12_Click()
+        {
+            Util.ReplaceAll("~", "~\r\n", editor);
+        }
+
+        private void btnUnformatX12_click()
+        {
+            Util.ReplaceAll("~\r\n", "~", editor);
+            Util.ReplaceAll("~\n", "~", editor);
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
             
