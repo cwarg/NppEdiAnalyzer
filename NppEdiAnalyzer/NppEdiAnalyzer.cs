@@ -105,6 +105,8 @@ namespace Kbg.Demo.Namespace
         static Bitmap tbBmp = Properties.Resources.star;
         static Bitmap tbBmpFormat = Properties.Resources.format;
         static Bitmap tbBmpUnFormat = Properties.Resources.unformat;
+        static Bitmap tbBmpFormatX12 = Properties.Resources.formatX12;
+        static Bitmap tbBmpUnFormatX12 = Properties.Resources.unformatX12;
         static Bitmap tbBmp_tbTab = Properties.Resources.star_bmp;
         static Icon tbIcon = null;
         static IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
@@ -259,7 +261,7 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
         static internal void SetToolBarIconX12Format()
         {
             toolbarIcons tbIcons = new toolbarIcons();
-            tbIcons.hToolbarBmp = tbBmpFormat.GetHbitmap();
+            tbIcons.hToolbarBmp = tbBmpFormatX12.GetHbitmap();
             IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
             Marshal.StructureToPtr(tbIcons, pTbIcons, false);
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMnuX12Format]._cmdID, pTbIcons);
@@ -269,7 +271,7 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
         static internal void SetToolBarIconX12UnFormat()
         {
             toolbarIcons tbIcons = new toolbarIcons();
-            tbIcons.hToolbarBmp = tbBmpUnFormat.GetHbitmap();
+            tbIcons.hToolbarBmp = tbBmpUnFormatX12.GetHbitmap();
             IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
             Marshal.StructureToPtr(tbIcons, pTbIcons, false);
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMnuX12Unformat]._cmdID, pTbIcons);
