@@ -37,6 +37,9 @@ namespace Kbg.NppPluginNET
             Kbg.Demo.Namespace.Main.SetToolBarIcon();
             Kbg.Demo.Namespace.Main.SetToolBarIconFormat();
             Kbg.Demo.Namespace.Main.SetToolBarIconUnFormat();
+            Kbg.Demo.Namespace.Main.SetToolBarIconX12Format();
+            Kbg.Demo.Namespace.Main.SetToolBarIconX12UnFormat();
+
         }
 
         public static void OnNotification(ScNotification notification)
@@ -97,6 +100,8 @@ namespace Kbg.Demo.Namespace
         static internal int idFrmGotToLine = -1;
         static internal int idMnuFormat = -1;
         static internal int idMnuUnformat = -1;
+        static internal int idMnuX12Format = -1;
+        static internal int idMnuX12Unformat = -1;
         static Bitmap tbBmp = Properties.Resources.star;
         static Bitmap tbBmpFormat = Properties.Resources.format;
         static Bitmap tbBmpUnFormat = Properties.Resources.unformat;
@@ -178,7 +183,9 @@ namespace Kbg.Demo.Namespace
   
             PluginBase.SetCommand(0, "Format EDIFACT (Alt+Down)", formatEdifact, new ShortcutKey(false, true, false, Keys.Down)); idMnuFormat = 0;
             PluginBase.SetCommand(1, "Un-Format EDIFACT (Alt+Up)", unFormatEdifact, new ShortcutKey(false, true, false, Keys.Up)); idMnuUnformat = 1;
-            PluginBase.SetCommand(2, "Structure View", DockableDlgDemo); idFrmGotToLine = 2;
+            PluginBase.SetCommand(2, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 2;
+            PluginBase.SetCommand(3, "Un-Format X12 (Alt+Right)", unformatX12, new ShortcutKey(false, true, false, Keys.Right)); idMnuX12Unformat = 3;
+            PluginBase.SetCommand(4, "Structure View", DockableDlgDemo); idFrmGotToLine = 4;
         }
 
         /// <summary>
@@ -195,6 +202,17 @@ namespace Kbg.Demo.Namespace
         {
             Util.ReplaceAll("'\r\n", "'", editor);
             Util.ReplaceAll("'\n", "'", editor);
+        }
+
+        static void formatX12()
+        {
+            Util.ReplaceAll("~", "~\r\n", editor);
+        }
+
+        static void unformatX12()
+        {
+            Util.ReplaceAll("~\r\n", "~", editor);
+            Util.ReplaceAll("~\n", "~", editor);
         }
 
         static void PrintScrollInformation()
@@ -235,6 +253,26 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
             IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
             Marshal.StructureToPtr(tbIcons, pTbIcons, false);
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMnuUnformat]._cmdID, pTbIcons);
+            Marshal.FreeHGlobal(pTbIcons);
+        }
+
+        static internal void SetToolBarIconX12Format()
+        {
+            toolbarIcons tbIcons = new toolbarIcons();
+            tbIcons.hToolbarBmp = tbBmpFormat.GetHbitmap();
+            IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
+            Marshal.StructureToPtr(tbIcons, pTbIcons, false);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMnuX12Format]._cmdID, pTbIcons);
+            Marshal.FreeHGlobal(pTbIcons);
+        }
+
+        static internal void SetToolBarIconX12UnFormat()
+        {
+            toolbarIcons tbIcons = new toolbarIcons();
+            tbIcons.hToolbarBmp = tbBmpUnFormat.GetHbitmap();
+            IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
+            Marshal.StructureToPtr(tbIcons, pTbIcons, false);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMnuX12Unformat]._cmdID, pTbIcons);
             Marshal.FreeHGlobal(pTbIcons);
         }
 
