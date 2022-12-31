@@ -5,6 +5,7 @@ using Kbg.NppPluginNET.PluginInfrastructure;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System;
 using System.Text.Json;
 
 
