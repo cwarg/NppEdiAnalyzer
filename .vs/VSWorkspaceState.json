@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\NppEdiAnalyzer",
+    "\\NppEdiAnalyzer\\PluginInfrastructure"
   ],
-  "SelectedNode": "\\NppEdiAnalyzer.sln",
+  "SelectedNode": "\\NppEdiAnalyzer\\NppEdiAnalyzer.cs",
   "PreviewInSolutionExplorer": false
 }

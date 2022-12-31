@@ -57,11 +57,6 @@ namespace Kbg.NppPluginNET
                 Main.PluginCleanUp();
                 Marshal.FreeHGlobal(_ptrPluginName);
             }
-            /*
-            else if (notification.Header.Code == (uint)NppMsg.SCN_DOUBLECLICK)
-            {
-                EDIAnalizer.RefreshData();
-            }*/
             else
             {
 	            Main.OnNotification(notification);
