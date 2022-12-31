@@ -17,7 +17,7 @@ If you decide to try or use any of the software provided below please be advise 
 Used Libraries
 --------------
 
-### NppPlugin.NET v0.6-0.7 by kbilsted
+### NppPlugin.NET v0.95.00 by kbilsted
 
 Base for making Notepad++ plugins in C# 
 Licensed under GPL v3
