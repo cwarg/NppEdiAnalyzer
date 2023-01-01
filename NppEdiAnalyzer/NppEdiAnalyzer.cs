@@ -106,6 +106,7 @@ namespace Kbg.Demo.Namespace
         static internal int idMnuX12Format = -1;
         static internal int idMnuX12Unformat = -1;
         static internal int idMnuLexerLanguage = -1;
+        static internal int idMnuDatabaseEditor = -1;
         static Bitmap tbBmp = Properties.Resources.star;
         static Bitmap tbBmpFormat = Properties.Resources.format;
         static Bitmap tbBmpUnFormat = Properties.Resources.unformat;
@@ -192,6 +193,7 @@ namespace Kbg.Demo.Namespace
             PluginBase.SetCommand(3, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 3;
             PluginBase.SetCommand(4, "Un-Format X12 (Alt+Right)", unformatX12, new ShortcutKey(false, true, false, Keys.Right)); idMnuX12Unformat = 4;
             PluginBase.SetCommand(5, "Add X12 Language (Must Restart)", addX12Language); idMnuLexerLanguage = 5;
+            PluginBase.SetCommand(6, "EDI Database Editor", DatabaseEditor); idMnuDatabaseEditor = 6;
         }
 
         static void formatEdifact()
@@ -570,6 +572,62 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
                 NppTbData _nppTbData = new NppTbData();
                 _nppTbData.hClient = frmGoToLine.Handle;
                 _nppTbData.pszName = "Npp EDI Analyzer";
+                // the dlgDlg should be the index of funcItem where the current function pointer is in
+                // this case is 15.. so the initial value of funcItem[15]._cmdID - not the updated internal one !
+                _nppTbData.dlgID = idFrmGotToLine;
+                // define the default docking behaviour
+                _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;
+                _nppTbData.hIconTab = (uint)tbIcon.Handle;
+                _nppTbData.pszModuleName = PluginName;
+                IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
+                Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
+
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+                // Following message will toogle both menu item state and toolbar button
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, 1);
+            }
+            else
+            {
+                if (!frmGoToLine.Visible)
+                {
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, frmGoToLine.Handle);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, 1);
+                }
+                else
+                {
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMHIDE, 0, frmGoToLine.Handle);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, 0);
+                }
+            }
+            //frmGoToLine.textBox1.Focus();
+        }
+
+        static void DatabaseEditor()
+        {
+            // Dockable Dialog Demo
+            // 
+            // This demonstration shows you how to do a dockable dialog.
+            // You can create your own non dockable dialog - in this case you don't nedd this demonstration.
+            if (frmGoToLine == null)
+            {
+                frmGoToLine = new frmGoToLine(editor);
+
+                using (Bitmap newBmp = new Bitmap(16, 16))
+                {
+                    Graphics g = Graphics.FromImage(newBmp);
+                    ColorMap[] colorMap = new ColorMap[1];
+                    colorMap[0] = new ColorMap();
+                    colorMap[0].OldColor = Color.Fuchsia;
+                    colorMap[0].NewColor = Color.FromKnownColor(KnownColor.ButtonFace);
+                    ImageAttributes attr = new ImageAttributes();
+                    attr.SetRemapTable(colorMap);
+                    g.DrawImage(tbBmp_tbTab, new Rectangle(0, 0, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel, attr);
+                    tbIcon = Icon.FromHandle(newBmp.GetHicon());
+                }
+
+                NppTbData _nppTbData = new NppTbData();
+                _nppTbData.hClient = frmGoToLine.Handle;
+                _nppTbData.pszName = "Npp EDI Database Editor";
                 // the dlgDlg should be the index of funcItem where the current function pointer is in
                 // this case is 15.. so the initial value of funcItem[15]._cmdID - not the updated internal one !
                 _nppTbData.dlgID = idFrmGotToLine;
