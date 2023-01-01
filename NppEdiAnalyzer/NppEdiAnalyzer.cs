@@ -185,12 +185,12 @@ namespace Kbg.Demo.Namespace
 
             PluginBase.SetCommand(17, "Print Scroll and Row Information", PrintScrollInformation);
             */
-  
-            PluginBase.SetCommand(0, "Format EDIFACT (Alt+Down)", formatEdifact, new ShortcutKey(false, true, false, Keys.Down)); idMnuFormat = 0;
-            PluginBase.SetCommand(1, "Un-Format EDIFACT (Alt+Up)", unFormatEdifact, new ShortcutKey(false, true, false, Keys.Up)); idMnuUnformat = 1;
-            PluginBase.SetCommand(2, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 2;
-            PluginBase.SetCommand(3, "Un-Format X12 (Alt+Right)", unformatX12, new ShortcutKey(false, true, false, Keys.Right)); idMnuX12Unformat = 3;
-            PluginBase.SetCommand(4, "Structure View", DockableDlgDemo); idFrmGotToLine = 4;
+
+            PluginBase.SetCommand(0, "Structure View", DockableDlgDemo); idFrmGotToLine = 0;
+            PluginBase.SetCommand(1, "Format EDIFACT (Alt+Down)", formatEdifact, new ShortcutKey(false, true, false, Keys.Down)); idMnuFormat = 1;
+            PluginBase.SetCommand(2, "Un-Format EDIFACT (Alt+Up)", unFormatEdifact, new ShortcutKey(false, true, false, Keys.Up)); idMnuUnformat = 2;
+            PluginBase.SetCommand(3, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 3;
+            PluginBase.SetCommand(4, "Un-Format X12 (Alt+Right)", unformatX12, new ShortcutKey(false, true, false, Keys.Right)); idMnuX12Unformat = 4;
             PluginBase.SetCommand(5, "Add X12 Language (Must Restart)", addX12Language); idMnuLexerLanguage = 5;
         }
 
@@ -226,7 +226,6 @@ namespace Kbg.Demo.Namespace
             string userDefLangFolder = @"%Appdata%\Notepad++\userDefineLangs\X12.xml";
             userDefLangFolder = Environment.ExpandEnvironmentVariables(userDefLangFolder);
 
-            string lexerLanguage = editor.GetLexerLanguage();
             string X12LanguageString = @"<NotepadPlus>
     <UserLang name=""X12"" ext="""">
         <Settings>
@@ -264,14 +263,10 @@ namespace Kbg.Demo.Namespace
     </UserLang>
 </NotepadPlus>";
 
-            if (lexerLanguage != "X12")
-            {
-                File.WriteAllText(userDefLangFolder, X12LanguageString);
-                editor.SetLexerLanguage("X12");
-            }
+            File.WriteAllText(userDefLangFolder, X12LanguageString);
 
             // To-Do: For language in lexer language, check for X12, if it does not exist, save the X12 string as a file in the user defined languages folder
-            // Find out if there is a way to either automatically restart NPP or 
+            // Find out if there is a way to either automatically restart NPP
         }
        
         static void PrintScrollInformation()
