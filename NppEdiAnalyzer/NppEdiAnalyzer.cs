@@ -194,11 +194,6 @@ namespace Kbg.Demo.Namespace
             PluginBase.SetCommand(5, "Add X12 Language (Must Restart)", addX12Language); idMnuLexerLanguage = 5;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// 
-
         static void formatEdifact()
         {
             Util.ReplaceAll("'", "'\r\n", editor);
