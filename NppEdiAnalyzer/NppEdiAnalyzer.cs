@@ -186,7 +186,7 @@ namespace Kbg.Demo.Namespace
             PluginBase.SetCommand(17, "Print Scroll and Row Information", PrintScrollInformation);
             */
 
-            PluginBase.SetCommand(0, "Structure View", DockableDlgDemo); idFrmGotToLine = 0;
+            PluginBase.SetCommand(0, "Structure View", StructureView); idFrmGotToLine = 0;
             PluginBase.SetCommand(1, "Format EDIFACT (Alt+Down)", formatEdifact, new ShortcutKey(false, true, false, Keys.Down)); idMnuFormat = 1;
             PluginBase.SetCommand(2, "Un-Format EDIFACT (Alt+Up)", unFormatEdifact, new ShortcutKey(false, true, false, Keys.Up)); idMnuUnformat = 2;
             PluginBase.SetCommand(3, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 3;
@@ -549,7 +549,7 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
                 MessageBox.Show(sessionPath, "Saved Session File :", MessageBoxButtons.OK);
         }
 
-        static void DockableDlgDemo()
+        static void StructureView()
         {
             // Dockable Dialog Demo
             // 
