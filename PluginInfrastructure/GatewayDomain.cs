@@ -52,7 +52,8 @@ namespace Kbg.NppPluginNET.PluginInfrastructure
     /// The first character in a document is 0, the second 1 and so on. If a document contains nLen characters, the last character is numbered nLen-1. The caret exists between character positions and can be located from before the first character (0) to after the last character (nLen).
     ///
     /// There are places where the caret can not go where two character bytes make up one character.
-    /// This occurs when a DBCS character from a language like Japanese is included in the document or when line ends are marked with the CP/M
+    /// This occurs when a DBCS character from a 
+    /// like Japanese is included in the document or when line ends are marked with the CP/M
     /// standard of a carriage return followed by a line feed.The INVALID_POSITION constant(-1) represents an invalid position within the document.
     ///
     /// All lines of text in Scintilla are the same height, and this height is calculated from the largest font in any current style.This restriction
