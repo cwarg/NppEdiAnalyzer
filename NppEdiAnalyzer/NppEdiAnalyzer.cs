@@ -100,7 +100,9 @@ namespace Kbg.Demo.Namespace
         static bool doCloseTag = false;
         static string sessionFilePath = @"C:\text.session";
         static public frmGoToLine frmGoToLine = null;
+        static public frmDatabaseEditor frmDatabaseEditor = null;
         static internal int idFrmGotToLine = -1;
+        static internal int idFrmDatabaseEditor = -1;
         static internal int idMnuFormat = -1;
         static internal int idMnuUnformat = -1;
         static internal int idMnuX12Format = -1;
@@ -608,9 +610,9 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
             // 
             // This demonstration shows you how to do a dockable dialog.
             // You can create your own non dockable dialog - in this case you don't nedd this demonstration.
-            if (frmGoToLine == null)
+            if (frmDatabaseEditor == null)
             {
-                frmGoToLine = new frmGoToLine(editor);
+                frmDatabaseEditor = new frmDatabaseEditor(editor);
 
                 using (Bitmap newBmp = new Bitmap(16, 16))
                 {
@@ -626,7 +628,7 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
                 }
 
                 NppTbData _nppTbData = new NppTbData();
-                _nppTbData.hClient = frmGoToLine.Handle;
+                _nppTbData.hClient = frmDatabaseEditor.Handle;
                 _nppTbData.pszName = "Npp EDI Database Editor";
                 // the dlgDlg should be the index of funcItem where the current function pointer is in
                 // this case is 15.. so the initial value of funcItem[15]._cmdID - not the updated internal one !
