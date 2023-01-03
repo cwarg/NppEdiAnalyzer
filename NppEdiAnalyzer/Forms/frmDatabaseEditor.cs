@@ -22,7 +22,6 @@ namespace Kbg.Demo.Namespace
 
         private void cbDatabaseSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MessageBox.Show(cbDatabaseSelector.SelectedItem.ToString());
             string selectedDatabase = cbDatabaseSelector.SelectedItem.ToString();
             string curAssemblyFolder = new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath;
             curAssemblyFolder = curAssemblyFolder.Replace(".dll", ".db");
