@@ -629,10 +629,10 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
 
                 NppTbData _nppTbData = new NppTbData();
                 _nppTbData.hClient = frmDatabaseEditor.Handle;
-                _nppTbData.pszName = "Npp EDI Database Editor";
+                _nppTbData.pszName = "NPP EDI Database Editor";
                 // the dlgDlg should be the index of funcItem where the current function pointer is in
                 // this case is 15.. so the initial value of funcItem[15]._cmdID - not the updated internal one !
-                _nppTbData.dlgID = idFrmGotToLine;
+                _nppTbData.dlgID = idFrmDatabaseEditor;
                 // define the default docking behaviour
                 _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;
                 _nppTbData.hIconTab = (uint)tbIcon.Handle;
@@ -642,19 +642,19 @@ The current scroll ratio is {Math.Round(scrollPercentage, 2)}%.
 
                 Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
                 // Following message will toogle both menu item state and toolbar button
-                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, 1);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmDatabaseEditor]._cmdID, 1);
             }
             else
             {
-                if (!frmGoToLine.Visible)
+                if (!frmDatabaseEditor.Visible)
                 {
                     Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, frmGoToLine.Handle);
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, 1);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmDatabaseEditor]._cmdID, 1);
                 }
                 else
                 {
                     Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMHIDE, 0, frmGoToLine.Handle);
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, 0);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK, PluginBase._funcItems.Items[idFrmDatabaseEditor]._cmdID, 0);
                 }
             }
             //frmGoToLine.textBox1.Focus();

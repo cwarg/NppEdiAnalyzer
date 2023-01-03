@@ -1,5 +1,6 @@
 ﻿using Kbg.NppPluginNET.PluginInfrastructure;
 using System;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.Json;
@@ -19,39 +20,39 @@ namespace Kbg.Demo.Namespace
             //this.myEDIAnalizer.setEDIAnalizer(editor);
         }
 
-        /*
-        private void button1_Click(object sender, EventArgs e)
+        private void cbDatabaseSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int line;
-            if (!int.TryParse(textBox1.Text, out line))
-                return;
-            editor.EnsureVisible(line - 1);
-            editor.GotoLine(line - 1);
-            editor.GrabFocus();
-        }
-        */
+            MessageBox.Show(cbDatabaseSelector.SelectedItem.ToString());
+            string selectedDatabase = cbDatabaseSelector.SelectedItem.ToString();
+            string curAssemblyFolder = new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            curAssemblyFolder = curAssemblyFolder.Replace(".dll", ".db");
 
-        /*
-        private void frmGoToLine_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((e.KeyData == Keys.Return) || (e.Alt && (e.KeyCode == Keys.G)))
+            if (!string.IsNullOrEmpty(curAssemblyFolder))
             {
-                button1.PerformClick();
-                e.Handled = true;
+                try
+                {
+                    using (SQLiteConnection db = new SQLiteConnection(@"Data Source=" + curAssemblyFolder + ";Pooling=true;FailIfMissing=false;Version=3"))
+                    {
+                        db.Open();
+                        var selectedDatabaseQuery = new SQLiteCommand($"select * from {selectedDatabase}", db);
+                        SQLiteDataReader finalQuery = selectedDatabaseQuery.ExecuteReader();
+                        DataTable dataTable1 = new DataTable();
+                        dataTable1.Load(finalQuery);
+                        foreach (DataColumn column in dataTable1.Columns) 
+                        {
+                            column.MaxLength = -1;
+                        }
+                        dataGridView1.DataSource = dataTable1;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
             }
-            else if (e.KeyData == Keys.Escape)
-            {
-                editor.GrabFocus();
-            }
-            else if (e.KeyCode == Keys.Tab)
-            {
-                Control next = GetNextControl((Control)sender, !e.Shift);
-                while ((next == null) || (!next.TabStop)) next = GetNextControl(next, !e.Shift);
-                next.Focus();
-                e.Handled = true;
-            }
+
         }
-        */
 
         void FrmDatabaseEditorVisibleChanged(object sender, EventArgs e)
         {
@@ -61,59 +62,6 @@ namespace Kbg.Demo.Namespace
                                   PluginBase._funcItems.Items[Main.idFrmDatabaseEditor]._cmdID, 0);
             }
         }
-
-        /*
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            //Util.FindNext(textBox2.Text,editor);
-            //Util.ReplaceNext(textBox2.Text, textBox3.Text, editor);
-            Util.ReplaceAll(textBox2.Text, textBox3.Text, editor);
-
-        }
-        */
-
-        /*
-        private void button4_Click(object sender, EventArgs e)
-        {
-            //
-            // This is the first node in the view.
-            //
-            TreeNode treeNode = new TreeNode("Windows");
-            treeView1.Nodes.Add(treeNode);
-            //
-            // Another node following the first node.
-            //
-            treeNode = new TreeNode("Linux");
-            treeView1.Nodes.Add(treeNode);
-            //
-            // Create two child nodes and put them in an array.
-            // ... Add the third node, and specify these as its children.
-            //
-            TreeNode node2 = new TreeNode("C#");
-            TreeNode node3 = new TreeNode("VB.NET");
-            TreeNode[] array = new TreeNode[] { node2, node3 };
-            //
-            // Final node.
-            //
-            treeNode = new TreeNode("Dot Net Perls", array);
-            treeView1.Nodes.Add(treeNode);
-        }
-        */
-
-        /*
-        private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            //
-            // Get the selected node.
-            //
-            TreeNode node = treeView1.SelectedNode;
-            //
-            // Render message box.
-            //
-            MessageBox.Show(string.Format("You selected: {0}", node.Text));
-        }
-        */
 
         private void button5_MouseClick(object sender, MouseEventArgs e)
         {
@@ -130,20 +78,9 @@ namespace Kbg.Demo.Namespace
 
         }
 
+        //private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
 
-        /*
-private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
-{
-//
-// Get the selected node.
-//
-TreeNode node = treeView1.SelectedNode;
-//
-// Render message box.
-//
-MessageBox.Show(string.Format("You selected: {0}", node.Text));
-}
-*/
-
+        //}
     }
 }
