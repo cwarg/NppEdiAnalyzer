@@ -1,4 +1,6 @@
-﻿namespace Kbg.Demo.Namespace
+﻿using System.Windows.Forms;
+
+namespace Kbg.Demo.Namespace
 {
     partial class frmDatabaseEditor
     {
@@ -37,13 +39,7 @@
             // cbDatabaseSelector
             // 
             this.cbDatabaseSelector.FormattingEnabled = true;
-            this.cbDatabaseSelector.Items.AddRange(new object[] {
-            "LNK_Elements_Components",
-            "LNK_Segments_Elements",
-            "MST_Components",
-            "MST_Elements",
-            "MST_RefTables",
-            "MST_Segments"});
+            this.cbDatabaseSelector.Items.AddRange(new object[] { "LNK_Elements_Components", "LNK_Segments_Elements", "MST_Components", "MST_Elements", "MST_RefTables", "MST_Segments" });
             this.cbDatabaseSelector.Location = new System.Drawing.Point(213, 8);
             this.cbDatabaseSelector.Margin = new System.Windows.Forms.Padding(2);
             this.cbDatabaseSelector.Name = "cbDatabaseSelector";
@@ -84,7 +80,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

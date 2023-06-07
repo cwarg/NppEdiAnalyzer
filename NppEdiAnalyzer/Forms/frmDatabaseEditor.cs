@@ -17,7 +17,6 @@ namespace Kbg.Demo.Namespace
         {
             this.editor = editor;
             InitializeComponent();
-            //this.myEDIAnalizer.setEDIAnalizer(editor);
         }
 
         private void cbDatabaseSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -33,15 +32,18 @@ namespace Kbg.Demo.Namespace
                     using (SQLiteConnection db = new SQLiteConnection(@"Data Source=" + curAssemblyFolder + ";Pooling=true;FailIfMissing=false;Version=3"))
                     {
                         db.Open();
-                        var selectedDatabaseQuery = new SQLiteCommand($"select * from {selectedDatabase}", db);
+                        var selectedDatabaseQuery = new SQLiteCommand($"select distinct * from {selectedDatabase}", db);
                         SQLiteDataReader finalQuery = selectedDatabaseQuery.ExecuteReader();
                         DataTable dataTable1 = new DataTable();
-                        dataTable1.Load(finalQuery);
                         foreach (DataColumn column in dataTable1.Columns) 
                         {
-                            column.MaxLength = -1;
+                            column.MaxLength = 255;
+                            column.AllowDBNull = true;
                         }
+                        dataTable1.Load(finalQuery);
                         dataGridView1.DataSource = dataTable1;
+                        
+                        //TODO: CHANGE MAXLENGTH FROM NULL to -1 IN ALL TABLES
                     }
                 }
                 catch (Exception ex)

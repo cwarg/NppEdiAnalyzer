@@ -39,12 +39,12 @@ namespace Kbg.NppPluginNET
         static internal void SetToolBarIcon()
         {
             Kbg.Demo.Namespace.Main.SetToolBarIcon();
+            Kbg.Demo.Namespace.Main.SetToolBarIconDatabaseEditor();
             Kbg.Demo.Namespace.Main.SetToolBarIconFormat();
             Kbg.Demo.Namespace.Main.SetToolBarIconUnFormat();
             Kbg.Demo.Namespace.Main.SetToolBarIconX12Format();
             Kbg.Demo.Namespace.Main.SetToolBarIconX12UnFormat();
-            Kbg.Demo.Namespace.Main.SetToolBarIconDatabaseEditor();
-
+            
         }
 
         public static void OnNotification(ScNotification notification)
@@ -111,6 +111,7 @@ namespace Kbg.Demo.Namespace
         static Bitmap tbBmpUnFormat = Properties.Resources.unformat;
         static Bitmap tbBmpFormatX12 = Properties.Resources.formatX12;
         static Bitmap tbBmpUnFormatX12 = Properties.Resources.unformatX12;
+        static Bitmap tbBmpDatabaseEditor = Properties.Resources.DatabaseEditor;
         static Bitmap tbBmp_tbTab = Properties.Resources.star_bmp;
         static Icon tbIcon = null;
         static IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
@@ -187,12 +188,12 @@ namespace Kbg.Demo.Namespace
             */
 
             PluginBase.SetCommand(0, "Structure View", StructureView); idFrmGotToLine = 0;
-            PluginBase.SetCommand(1, "Format EDIFACT (Alt+Down)", formatEdifact, new ShortcutKey(false, true, false, Keys.Down)); idMnuFormat = 1;
-            PluginBase.SetCommand(2, "Un-Format EDIFACT (Alt+Up)", unFormatEdifact, new ShortcutKey(false, true, false, Keys.Up)); idMnuUnformat = 2;
-            PluginBase.SetCommand(3, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 3;
-            PluginBase.SetCommand(4, "Un-Format X12 (Alt+Right)", unformatX12, new ShortcutKey(false, true, false, Keys.Right)); idMnuX12Unformat = 4;
-            PluginBase.SetCommand(5, "Add X12 Language (Must Restart)", addX12Language); idMnuLexerLanguage = 5;
-            PluginBase.SetCommand(6, "EDI Database Editor", DatabaseEditor); idFrmDatabaseEditor = 6;
+            PluginBase.SetCommand(1, "EDI Database Editor", DatabaseEditor); idFrmDatabaseEditor = 1;
+            PluginBase.SetCommand(2, "Format EDIFACT (Alt+Down)", formatEdifact, new ShortcutKey(false, true, false, Keys.Down)); idMnuFormat = 2;
+            PluginBase.SetCommand(3, "Un-Format EDIFACT (Alt+Up)", unFormatEdifact, new ShortcutKey(false, true, false, Keys.Up)); idMnuUnformat = 3;
+            PluginBase.SetCommand(4, "Format X12 (Alt+Left)", formatX12, new ShortcutKey(false, true, false, Keys.Left)); idMnuX12Format = 4;
+            PluginBase.SetCommand(5, "Un-Format X12 (Alt+Right)", unformatX12, new ShortcutKey(false, true, false, Keys.Right)); idMnuX12Unformat = 5;
+            PluginBase.SetCommand(6, "Add X12 Language (Must Restart)", addX12Language); idMnuLexerLanguage = 6;
         }
 
         static void formatEdifact()
@@ -285,6 +286,24 @@ namespace Kbg.Demo.Namespace
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idFrmGotToLine]._cmdID, pTbIcons);
             Marshal.FreeHGlobal(pTbIcons);
         }
+        
+        static internal void SetToolBarIconDatabaseEditor()
+        {
+            try
+            {
+                toolbarIcons tbIcons = new toolbarIcons();
+                tbIcons.hToolbarBmp = tbBmpDatabaseEditor.GetHbitmap();
+                IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
+                Marshal.StructureToPtr(tbIcons, pTbIcons, false);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON,
+                    PluginBase._funcItems.Items[idFrmDatabaseEditor]._cmdID, pTbIcons);
+                Marshal.FreeHGlobal(pTbIcons);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
 
         static internal void SetToolBarIconFormat()
         {
@@ -325,17 +344,6 @@ namespace Kbg.Demo.Namespace
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMnuX12Unformat]._cmdID, pTbIcons);
             Marshal.FreeHGlobal(pTbIcons);
         }
-        
-        static internal void SetToolBarIconDatabaseEditor()
-        {
-            toolbarIcons tbIcons = new toolbarIcons();
-            tbIcons.hToolbarBmp = tbBmpUnFormatX12.GetHbitmap();
-            IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
-            Marshal.StructureToPtr(tbIcons, pTbIcons, false);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idFrmDatabaseEditor]._cmdID, pTbIcons);
-            Marshal.FreeHGlobal(pTbIcons);
-        }
-
 
         static internal void PluginCleanUp()
         {
@@ -557,10 +565,6 @@ namespace Kbg.Demo.Namespace
 
         static void StructureView()
         {
-            // Dockable Dialog Demo
-            // 
-            // This demonstration shows you how to do a dockable dialog.
-            // You can create your own non dockable dialog - in this case you don't nedd this demonstration.
             if (frmGoToLine == null)
             {
                 frmGoToLine = new frmGoToLine(editor);
@@ -633,8 +637,7 @@ namespace Kbg.Demo.Namespace
                 NppTbData _nppTbData = new NppTbData();
                 _nppTbData.hClient = frmDatabaseEditor.Handle;
                 _nppTbData.pszName = "NPP EDI Database Editor";
-                // the dlgDlg should be the index of funcItem where the current function pointer is in
-                // this case is 15.. so the initial value of funcItem[15]._cmdID - not the updated internal one !
+                // the dlgDlg should be the index of funcItem where the current function pointer is
                 _nppTbData.dlgID = idFrmDatabaseEditor;
                 // define the default docking behaviour
                 _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;

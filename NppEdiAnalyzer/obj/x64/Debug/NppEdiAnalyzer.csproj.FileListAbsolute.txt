@@ -94,6 +94,7 @@ C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\EntityF
 C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\EntityFramework.SqlServer.xml
 C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\System.Buffers.xml
+C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\System.Data.SQLite.xml
 C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\System.Memory.xml
 C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\System.Numerics.Vectors.xml
 C:\Users\cwarg\RiderProjects\NppEdiAnalyzer\NppEdiAnalyzer\bin\Debug-x64\System.Runtime.CompilerServices.Unsafe.xml
